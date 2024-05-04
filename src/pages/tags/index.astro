@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+const allPosts = await Astro.glob('../posts/*.md')
+const tags = [...new Set(allPosts.flatMap((post) => post.frontmatter?.tags ?? []))]
+const pageTitle = 'Tag Index'
+---
+
+<BaseLayout title={pageTitle} currentPage="tags">
+	<nav>
+		<ul class="tags" aria-label="blog post tags">
+			{
+				tags &&
+					tags.map((tag) => (
+						<li class="tag" role="listitem">
+							<a href={`/tags/${tag}`}>{tag}</a>
+						</li>
+					))
+			}
+		</ul>
+	</nav>
+</BaseLayout>
+
+<style>
+	a {
+		color: #00539f;
+		text-decoration: none;
+		padding: 0.5em 1em;
+		border-radius: 0.5em;
+		border: dotted 1px #a1a1a1;
+		width: 100%;
+		margin: 0;
+		background-color: #f8fcfd;
+		line-height: 1;
+		font-size: 1rem;
+	}
+
+	a:is(:hover, :focus) {
+		color: #f1f5f9;
+		background-color: #00539f;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 0;
+		margin: 0;
+		gap: 0.5em;
+	}
+
+	.tag {
+		list-style: none;
+		margin: 0.25em 0;
+		padding: 0;
+		font-size: 1.15em;
+	}
+</style>
