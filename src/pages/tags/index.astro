@@ -4,6 +4,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 const allPosts = await Astro.glob('../posts/*.md')
 const tags = [...new Set(allPosts.flatMap((post) => post.frontmatter?.tags ?? []))]
 const pageTitle = 'Tag Index'
+
+export const prerender = true
 ---
 
 <BaseLayout title={pageTitle} currentPage="tags">
